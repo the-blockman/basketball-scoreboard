@@ -7,34 +7,36 @@
     <title>Basketball Scorecard</title>
   </head>
   <body>
-    <div class="container">
-      <div id="timer">12:00</div>
-      <div class="score-container">
-        <div>
-          <h3>HOME</h3>
-          <div class="display">
-            <p id="home-display-text">0</p>
+    <section>
+      <div class="container">
+        <div id="timer">12:00</div>
+        <div class="score-container">
+          <div>
+            <h3>HOME</h3>
+            <div class="display">
+              <p id="home-display-text">0</p>
+            </div>
+            <div class="button-row">
+              <button id="home">+1</button>
+              <button id="home">+2</button>
+              <button id="home">+3</button>
+            </div>
           </div>
-          <div class="button-row">
-            <button id="home">+1</button>
-            <button id="home">+2</button>
-            <button id="home">+3</button>
+          <div>
+            <h3>GUEST</h3>
+            <div class="display">
+              <p id="away-display-text">0</p>
+            </div>
+            <div class="button-row">
+              <button id="away">+1</button>
+              <button id="away">+2</button>
+              <button id="away">+3</button>
+            </div>
           </div>
         </div>
-        <div>
-          <h3>GUEST</h3>
-          <div class="display">
-            <p id="away-display-text">0</p>
-          </div>
-          <div class="button-row">
-            <button id="away">+1</button>
-            <button id="away">+2</button>
-            <button id="away">+3</button>
-          </div>
-        </div>
+        <div><button id="reset">New game</button></div>
       </div>
-      <div><button id="reset">New game</button></div>
-    </div>
+    </section>
 
     <script src="index.js"></script>
   </body>
