@@ -20,12 +20,20 @@ p {
   margin: 0;
 }
 
+section {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
   display: inline-flex;
   flex-direction: column;
   background-color: #1b244a;
   gap: 20px;
   padding: 20px 40px;
+  border-radius: 12px;
 }
 
 #timer {
