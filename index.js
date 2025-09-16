@@ -4,9 +4,11 @@ let homeButtons = document.querySelectorAll("#home");
 let awayButtons = document.querySelectorAll("#away");
 let newGame = document.getElementById("reset");
 let timerDisplay = document.getElementById("timer");
+let pauseButton = document.getElementById("pause");
+let resumeButton = document.getElementById("resume");
 
 let timer;
-
+let isPaused = false;
 function incrementCount(targetButton, count, display) {
   if (targetButton === "+1") {
     count++;
@@ -26,26 +28,28 @@ function incrementCount(targetButton, count, display) {
 }
 
 function countDown() {
-  let totalTime = 720;
-  clearInterval(timer); //12mins in seconds
+  let totalTime = 600;
+  clearInterval(timer); //10mins in seconds
 
   timer = setInterval(() => {
-    let minutes = Math.floor(totalTime / 60);
-    let seconds = totalTime % 60;
+    if (!isPaused) {
+      let minutes = Math.floor(totalTime / 60);
+      let seconds = totalTime % 60;
 
-    let digitalTime = `${String(minutes).padStart(2, "0")}:${String(
-      seconds
-    ).padStart(2, "0")}`;
+      let digitalTime = `${String(minutes).padStart(2, "0")}:${String(
+        seconds
+      ).padStart(2, "0")}`;
 
-    timerDisplay.textContent = digitalTime;
+      timerDisplay.textContent = digitalTime;
 
-    if (totalTime <= 0) {
-      clearInterval(timer);
-      timerDisplay.textContent = "00:00";
-      timerDisplay.style.color = "red";
+      if (totalTime <= 0) {
+        clearInterval(timer);
+        timerDisplay.textContent = "00:00";
+        timerDisplay.style.color = "red";
+      }
+
+      totalTime--;
     }
-
-    totalTime--;
   }, 1000);
 }
 
@@ -80,10 +84,19 @@ awayButtons.forEach((button) => {
   });
 });
 
+pauseButton.addEventListener("click", () => {
+  isPaused = true;
+});
+
+resumeButton.addEventListener("click", () => {
+  isPaused = false;
+});
+
 newGame.addEventListener("click", () => {
   homeDisplay.textContent = 0;
   awayDisplay.textContent = 0;
-  timerDisplay.textContent = "12:00";
+  timerDisplay.textContent = "10:00";
+  isPaused = false;
   updateLeaderColor();
   countDown();
 });
