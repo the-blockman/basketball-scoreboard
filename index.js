@@ -19,6 +19,19 @@ const gameTimeSelect = document.getElementById("game-time");
 const pauseButton = document.getElementById("pause");
 const resumeButton = document.getElementById("resume");
 const resetButton = document.getElementById("reset");
+const minusButtons = document.querySelectorAll(".minus-btn");
+
+minusButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const team = button.dataset.team;
+
+    // ✅ prevent negative scores
+    if (state[team] > 0) {
+      state[team] -= 1;
+      render();
+    }
+  });
+});
 
 // RENDER FUNCTION
 function render() {

@@ -152,6 +152,12 @@ button {
   transition: all 0.2s ease;
 }
 
+.minus-btn {
+  margin-top: 10px;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
 /* HOVER */
 button:hover {
   background-color: var(--accent);
