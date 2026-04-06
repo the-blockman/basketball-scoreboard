@@ -61,6 +61,19 @@ p {
 }
 
 /* TIMER */
+.time-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+select {
+  padding: 5px;
+  font-family: "timer";
+  border-radius: 4px;
+}
+
 #timer {
   background-color: var(--bg-dark);
   font-family: "timer";

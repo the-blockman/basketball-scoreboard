@@ -15,7 +15,7 @@ const awayDisplay = document.getElementById("away-display-text");
 const shotClockDisplay = document.getElementById("shot-clock");
 const resetShotBtn = document.getElementById("reset-shot");
 const timerDisplay = document.getElementById("timer");
-
+const gameTimeSelect = document.getElementById("game-time");
 const pauseButton = document.getElementById("pause");
 const resumeButton = document.getElementById("resume");
 const resetButton = document.getElementById("reset");
@@ -73,6 +73,7 @@ function startTimer() {
 
     if (state.time === 0) {
       clearInterval(state.timer);
+      gameTimeSelect.disabled = false;
       timerDisplay.style.color = "red";
     }
   }, 1000);
@@ -119,12 +120,14 @@ resumeButton.addEventListener("click", () => {
 resetButton.addEventListener("click", () => {
   state.home = 0;
   state.away = 0;
-  state.time = 600;
+  state.time = Number(gameTimeSelect.value);
   state.shotClock = 24;
   state.isPaused = false;
   state.isGameStarted = true;
 
   timerDisplay.style.color = "white";
+
+  gameTimeSelect.disabled = true;
 
   render();
   startTimer();

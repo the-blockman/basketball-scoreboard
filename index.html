@@ -10,6 +10,16 @@
     <main>
       <div class="container">
         <!-- TIMER -->
+        <div class="time-select">
+          <label for="game-time">Game Time:</label>
+          <select id="game-time">
+            <option value="300">5 Minutes</option>
+            <option value="420">7 Minutes</option>
+            <option value="600" selected>10 Minutes</option>
+            <option value="720">12 Minutes</option>
+          </select>
+        </div>
+
         <div id="timer" aria-live="polite">10:00</div>
         <div id="shot-clock">24</div>
         <button id="reset-shot">Reset Shot Clock</button>
