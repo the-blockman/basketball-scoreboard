@@ -68,6 +68,18 @@ p {
   padding: 10px 0;
 }
 
+#shot-clock {
+  background-color: black;
+  font-family: "timer";
+  font-size: 36px;
+  padding: 8px 0;
+  color: orange;
+}
+
+#shot-clock.low {
+  color: red;
+}
+
 /* SCORE LAYOUT */
 .score-container {
   display: flex;
@@ -95,7 +107,8 @@ p {
 }
 
 /* LEADER HIGHLIGHT */
-.leading {
+#home-display-text.leading,
+#away-display-text.leading {
   color: var(--leader);
 }
 

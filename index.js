@@ -6,11 +6,14 @@ const state = {
   isPaused: false,
   timer: null,
   isGameStarted: false,
+  shotClock: 24,
 };
 
 // DOM REFERENCES
 const homeDisplay = document.getElementById("home-display-text");
 const awayDisplay = document.getElementById("away-display-text");
+const shotClockDisplay = document.getElementById("shot-clock");
+const resetShotBtn = document.getElementById("reset-shot");
 const timerDisplay = document.getElementById("timer");
 
 const pauseButton = document.getElementById("pause");
@@ -22,6 +25,14 @@ function render() {
   // Update scores
   homeDisplay.textContent = state.home;
   awayDisplay.textContent = state.away;
+  shotClockDisplay.textContent = state.shotClock;
+
+  // turn red when low
+  if (state.shotClock <= 5) {
+    shotClockDisplay.classList.add("low");
+  } else {
+    shotClockDisplay.classList.remove("low");
+  }
 
   // Update timer
   const minutes = Math.floor(state.time / 60);
@@ -37,6 +48,10 @@ function render() {
 function addPoints(team, points) {
   if (!state.isGameStarted) return;
   state[team] += points;
+
+  //reset shot clock on score
+  state.shotClock = 24;
+
   render();
 }
 
@@ -47,6 +62,12 @@ function startTimer() {
   state.timer = setInterval(() => {
     if (!state.isPaused && state.time > 0) {
       state.time--;
+
+      // shot clock countdown
+      if (state.shotClock > 0) {
+        state.shotClock--;
+      }
+
       render();
     }
 
@@ -82,6 +103,11 @@ document.addEventListener("click", (e) => {
 });
 
 // CONTROLS
+resetShotBtn.addEventListener("click", () => {
+  state.shotClock = 24;
+  render();
+});
+
 pauseButton.addEventListener("click", () => {
   state.isPaused = true;
 });
@@ -94,6 +120,7 @@ resetButton.addEventListener("click", () => {
   state.home = 0;
   state.away = 0;
   state.time = 600;
+  state.shotClock = 24;
   state.isPaused = false;
   state.isGameStarted = true;
 
