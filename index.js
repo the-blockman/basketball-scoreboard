@@ -5,6 +5,7 @@ const state = {
   time: 600, // 10 minutes in seconds
   isPaused: false,
   timer: null,
+  isGameStarted: false,
 };
 
 // DOM REFERENCES
@@ -34,6 +35,7 @@ function render() {
 
 // SCORE UPDATE
 function addPoints(team, points) {
+  if (!state.isGameStarted) return;
   state[team] += points;
   render();
 }
@@ -93,6 +95,7 @@ resetButton.addEventListener("click", () => {
   state.away = 0;
   state.time = 600;
   state.isPaused = false;
+  state.isGameStarted = true;
 
   timerDisplay.style.color = "white";
 
@@ -102,4 +105,3 @@ resetButton.addEventListener("click", () => {
 
 // INIT
 render();
-startTimer();
