@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,40 +7,92 @@
     <title>Basketball Scorecard</title>
   </head>
   <body>
-    <section>
+    <main>
       <div class="container">
-        <div id="timer">10:00</div>
+        <!-- TIMER -->
+        <div id="timer" aria-live="polite">10:00</div>
+
+        <!-- SCORE BOARDS -->
         <div class="score-container">
+          <!-- HOME -->
           <div class="score-board">
             <h3>HOME</h3>
             <div class="display">
               <p id="home-display-text">0</p>
             </div>
             <div class="button-row">
-              <button id="home">+1</button>
-              <button id="home">+2</button>
-              <button id="home">+3</button>
+              <button
+                class="score-btn"
+                data-team="home"
+                data-points="1"
+                aria-label="Add 1 point to home"
+              >
+                +1
+              </button>
+              <button
+                class="score-btn"
+                data-team="home"
+                data-points="2"
+                aria-label="Add 2 points to home"
+              >
+                +2
+              </button>
+              <button
+                class="score-btn"
+                data-team="home"
+                data-points="3"
+                aria-label="Add 3 points to home"
+              >
+                +3
+              </button>
             </div>
           </div>
+
+          <!-- AWAY -->
           <div class="score-board">
             <h3>AWAY</h3>
             <div class="display">
               <p id="away-display-text">0</p>
             </div>
             <div class="button-row">
-              <button id="away">+1</button>
-              <button id="away">+2</button>
-              <button id="away">+3</button>
+              <button
+                class="score-btn"
+                data-team="away"
+                data-points="1"
+                aria-label="Add 1 point to away"
+              >
+                +1
+              </button>
+              <button
+                class="score-btn"
+                data-team="away"
+                data-points="2"
+                aria-label="Add 2 points to away"
+              >
+                +2
+              </button>
+              <button
+                class="score-btn"
+                data-team="away"
+                data-points="3"
+                aria-label="Add 3 points to away"
+              >
+                +3
+              </button>
             </div>
           </div>
         </div>
+
+        <!-- CONTROLS -->
         <div class="options">
-          <div><button id="pause">Pause</button></div>
-          <div><button id="resume">Resume</button></div>
+          <button id="pause">Pause</button>
+          <button id="resume">Resume</button>
         </div>
-        <div><button id="reset">New game</button></div>
+
+        <!-- RESET -->
+        <button id="reset">New Game</button>
       </div>
-    </section>
+    </main>
 
     <script src="index.js"></script>
   </body>

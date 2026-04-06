@@ -1,102 +1,105 @@
-let homeDisplay = document.getElementById("home-display-text");
-let awayDisplay = document.getElementById("away-display-text");
-let homeButtons = document.querySelectorAll("#home");
-let awayButtons = document.querySelectorAll("#away");
-let newGame = document.getElementById("reset");
-let timerDisplay = document.getElementById("timer");
-let pauseButton = document.getElementById("pause");
-let resumeButton = document.getElementById("resume");
+//STATE
+const state = {
+  home: 0,
+  away: 0,
+  time: 600, // 10 minutes in seconds
+  isPaused: false,
+  timer: null,
+};
 
-let timer;
-let isPaused = false;
-function incrementCount(targetButton, count, display) {
-  if (targetButton === "+1") {
-    count++;
-    display.textContent = count;
-  }
+// DOM REFERENCES
+const homeDisplay = document.getElementById("home-display-text");
+const awayDisplay = document.getElementById("away-display-text");
+const timerDisplay = document.getElementById("timer");
 
-  if (targetButton === "+2") {
-    count += 2;
-    display.textContent = count;
-  }
+const pauseButton = document.getElementById("pause");
+const resumeButton = document.getElementById("resume");
+const resetButton = document.getElementById("reset");
 
-  if (targetButton === "+3") {
-    count += 3;
-    display.textContent = count;
-  }
+// RENDER FUNCTION
+function render() {
+  // Update scores
+  homeDisplay.textContent = state.home;
+  awayDisplay.textContent = state.away;
+
+  // Update timer
+  const minutes = Math.floor(state.time / 60);
+  const seconds = state.time % 60;
+
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+  // Update leader highlight
   updateLeaderColor();
 }
 
-function countDown() {
-  let totalTime = 600;
-  clearInterval(timer); //10mins in seconds
+// SCORE UPDATE
+function addPoints(team, points) {
+  state[team] += points;
+  render();
+}
 
-  timer = setInterval(() => {
-    if (!isPaused) {
-      let minutes = Math.floor(totalTime / 60);
-      let seconds = totalTime % 60;
+// TIMER LOGIC
+function startTimer() {
+  clearInterval(state.timer);
 
-      let digitalTime = `${String(minutes).padStart(2, "0")}:${String(
-        seconds
-      ).padStart(2, "0")}`;
+  state.timer = setInterval(() => {
+    if (!state.isPaused && state.time > 0) {
+      state.time--;
+      render();
+    }
 
-      timerDisplay.textContent = digitalTime;
-
-      if (totalTime <= 0) {
-        clearInterval(timer);
-        timerDisplay.textContent = "00:00";
-        timerDisplay.style.color = "red";
-      }
-
-      totalTime--;
+    if (state.time === 0) {
+      clearInterval(state.timer);
+      timerDisplay.style.color = "red";
     }
   }, 1000);
 }
 
+// LEADER COLOR (uses CSS class)
 function updateLeaderColor() {
-  if (Number(homeDisplay.textContent) > Number(awayDisplay.textContent)) {
-    homeDisplay.style.color = "green";
-    awayDisplay.style.color = "red";
-  } else if (
-    Number(homeDisplay.textContent) < Number(awayDisplay.textContent)
-  ) {
-    awayDisplay.style.color = "green";
-    homeDisplay.style.color = "red";
-  } else {
-    homeDisplay.style.color = "red";
-    awayDisplay.style.color = "red";
+  homeDisplay.classList.remove("leading");
+  awayDisplay.classList.remove("leading");
+
+  if (state.home > state.away) {
+    homeDisplay.classList.add("leading");
+  } else if (state.away > state.home) {
+    awayDisplay.classList.add("leading");
   }
 }
 
-homeButtons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    let targetButton = event.target.textContent;
-    let homeCount = Number(homeDisplay.textContent);
-    incrementCount(targetButton, homeCount, homeDisplay);
-  });
+// EVENT DELEGATION (for all score buttons)
+document.addEventListener("click", (e) => {
+  const btn = e.target;
+
+  if (btn.classList.contains("score-btn")) {
+    const team = btn.dataset.team;
+    const points = Number(btn.dataset.points);
+
+    addPoints(team, points);
+  }
 });
 
-awayButtons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    let targetButton = event.target.textContent;
-    let awayCount = Number(awayDisplay.textContent);
-    incrementCount(targetButton, awayCount, awayDisplay);
-  });
-});
-
+// CONTROLS
 pauseButton.addEventListener("click", () => {
-  isPaused = true;
+  state.isPaused = true;
 });
 
 resumeButton.addEventListener("click", () => {
-  isPaused = false;
+  state.isPaused = false;
 });
 
-newGame.addEventListener("click", () => {
-  homeDisplay.textContent = 0;
-  awayDisplay.textContent = 0;
-  timerDisplay.textContent = "10:00";
-  isPaused = false;
-  updateLeaderColor();
-  countDown();
+resetButton.addEventListener("click", () => {
+  state.home = 0;
+  state.away = 0;
+  state.time = 600;
+  state.isPaused = false;
+
+  timerDisplay.style.color = "white";
+
+  render();
+  startTimer();
 });
+
+// INIT
+render();
+startTimer();
